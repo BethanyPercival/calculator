@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var verticalStackView: UIStackView!
     @IBOutlet weak var display: UILabel!
     var equationType: EquationType = .none
+    var firstNumber: Int = 0
+    
     
     var btnStrings: [[String]] {
         return [
@@ -55,8 +57,9 @@ class ViewController: UIViewController {
     }
     
     @objc func onClick(_ selector: UIButton) {
-        display.text = selector.title(for: .normal)
-        switch display.text {
+        guard let text = selector.title(for: .normal) else { return }
+        display.text = text
+        switch text {
         case "x":
             equationType = .multiply
         case "-":
@@ -70,7 +73,21 @@ class ViewController: UIViewController {
         case "AC":
             
         default:
-            
+            if isNumber(text) && equationType == .none {
+                if firstNumber == 0 {
+                    firstNumber = Int(text) ?? 0
+                } else {
+                    
+                }
+            }
         }
+    }
+    
+    func isNumber(_ text: String) -> Bool {
+        let num = Int(text)
+        if num != nil {
+            return true
+        }
+        return false
     }
 }
